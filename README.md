@@ -16,7 +16,9 @@ The URL Shortener Service is a lightweight application designed to convert long 
    - Improve performance by caching short URLs and their corresponding long URLs using Redis.
 5. Rate-Limiting:
    - Limit the number of requests from a single IP to 100 requests per minute to prevent abuse.
-6. Scheduled Cleanup: - Automatically remove expired URLs from both the database and Redis every hour using APScheduler.
+6. Scheduled Cleanup:
+
+   - Automatically remove expired URLs from both the database and Redis every hour using APScheduler.
 
 ## Routes and Endpoints
 
@@ -118,6 +120,40 @@ The URL Shortener Service is a lightweight application designed to convert long 
       This ensures that excessive usage by a single IP does not overwhelm the service.
 5.  Scheduler for Cleanup
     - APScheduler is used to automate cleanup tasks. The scheduler runs in the background and removes expired URLs every hour.
+
+## Postman Collection
+
+- To test the API using Postman:
+
+  - Import the provided Postman collection file: `Short_URL.postman_collection`.
+
+## High Level Architecture
+
+### Diagram Explanation
+
+![High Level Architecture](./images/HLD.png)
+
+1. Users:
+
+   - User 1 and User 2 represent clients making requests to the API Server.
+   - These requests could be for creating short URLs, retrieving the original URL, or tracking analytics.
+
+2. API Server:
+
+   - The central component of the system.
+   - Handles user requests and interacts with the Redis cache and SQLite/DB for data storage and retrieval.
+
+3. Redis Cache:
+
+   - Acts as a caching layer to reduce the load on the SQLite/DB.
+   - If a user requests the original URL (short_url), the API Server first checks the Redis cache.
+     - Cache Hit: If the URL is found in Redis, it's returned directly.
+     - Cache Miss: If the URL is not found in Redis, the API Server queries the SQLite/DB, retrieves the original URL, and stores it in Redis for future requests.
+
+4. SQLite/DB:
+
+   - The persistent storage for all URLs and their metadata (e.g., access_count, expires_at).
+   - Used as the fallback when the cache does not have the requested data.
 
 ## Challenges Faced
 

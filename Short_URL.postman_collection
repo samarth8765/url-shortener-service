@@ -1,0 +1,104 @@
+{
+	"info": {
+		"_postman_id": "f0898388-c9d3-417a-bc03-8b8791a41685",
+		"name": "Short URL",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		"_exporter_id": "20330413"
+	},
+	"item": [
+		{
+			"name": "Create Short URL",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"original_url\" : \"https://google.com\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": "{{ENDPOINT}}/shorten"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Original URL",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ENDPOINT}}/:short_url",
+					"host": [
+						"{{ENDPOINT}}"
+					],
+					"path": [
+						":short_url"
+					],
+					"variable": [
+						{
+							"key": "short_url",
+							"value": "99999eb"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Analytics",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{ENDPOINT}}/access_count/:short_url",
+					"host": [
+						"{{ENDPOINT}}"
+					],
+					"path": [
+						"access_count",
+						":short_url"
+					],
+					"variable": [
+						{
+							"key": "short_url",
+							"value": "99999eb"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "ENDPOINT",
+			"value": "http://127.0.0.1:8080",
+			"type": "string"
+		}
+	]
+}
